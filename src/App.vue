@@ -1,5 +1,10 @@
 <template>
-  <h1>App</h1>
+  <main>
+    <header>
+      <img src="./assets/logo.png" alt=" pinia logo">
+      <h1>Pinia Tasks</h1>
+    </header>
+  </main>
 </template>
 
 <script lang="ts">
