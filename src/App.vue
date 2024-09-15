@@ -5,8 +5,21 @@
       <h1>Pinia Tasks</h1>
     </header>
 
-    <div class="task-list">
+    <nav class="filter">
+      <button @click="filter = 'all'">All tasks</button>
+      <button @click="filter = 'favs'">Favs tasks</button>
+    </nav>
+
+    <div class="task-list" v-if="filter === 'all'">
+      <p>Your have {{ taskStore.totalCount }} tasks left to do</p>
       <div v-for="task in taskStore.tasks" v-bind:key="task.id">
+        <TaskDetails :task="task" />
+      </div>
+    </div>
+
+    <div class="task-list" v-if="filter === 'favs'">
+      <p>Your have {{ taskStore.favCount }} favs left to do</p>
+      <div v-for="task in favTasks" v-bind:key="task.id">
         <TaskDetails :task="task" />
       </div>
     </div>
@@ -15,7 +28,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import { useTaskStore } from "./store/TaskStore";
 import TaskDetails from "./components/TaskDetails.vue";
 
@@ -26,8 +39,11 @@ export default defineComponent({
   },
   setup() {
     const taskStore = useTaskStore()
+    const favTasks = taskStore.favs;
 
-    return { taskStore }
+    const filter = ref("all")
+
+    return { taskStore, filter, favTasks }
   }
 });
 </script>
