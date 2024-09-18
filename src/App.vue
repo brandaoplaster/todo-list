@@ -23,7 +23,7 @@
 
     <div class="task-list" v-if="filter === 'favs'">
       <p>Your have {{ taskStore.favCount }} favs left to do</p>
-      <div v-for="task in favTasks" v-bind:key="task.id">
+      <div v-for="task in taskStore.favs" v-bind:key="task.id">
         <TaskDetails :task="task" />
       </div>
     </div>
@@ -45,11 +45,10 @@ export default defineComponent({
   },
   setup() {
     const taskStore = useTaskStore()
-    const favTasks = taskStore.favs;
 
     const filter = ref("all")
 
-    return { taskStore, filter, favTasks }
+    return { taskStore, filter }
   }
 });
 </script>
