@@ -36,7 +36,9 @@ export const useTaskStore = defineStore('taskStore', {
     },
     toggleFav(id: number) {
       const task = this.tasks.find((t: Task) => t.id === id)
-      task ? task.isFav = !task.isFav : null;
+      if (task) {
+        task.isFav = !task.isFav
+      }
     }
   }
 });
