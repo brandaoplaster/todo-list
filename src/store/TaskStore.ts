@@ -8,6 +8,7 @@ interface Task {
 
 interface TaskState {
   tasks: Task[];
+  isLoading: boolean
 }
 
 export const useTaskStore = defineStore('taskStore', {
@@ -16,7 +17,8 @@ export const useTaskStore = defineStore('taskStore', {
       { id: 1, title: "buy some milk", isFav: false },
       { id: 2, title: "play Fifa", isFav: true },
       { id: 3, title: "working in project", isFav: false },
-    ]
+    ],
+    isLoading: false
   }),
   getters: {
     favs: (state): Task[] => state.tasks.filter(task => task.isFav),
@@ -26,6 +28,13 @@ export const useTaskStore = defineStore('taskStore', {
     totalCount: (state): number => state.tasks.length
   },
   actions: {
+    async getTask() {
+      this.isLoading = true
+      const res = await fetch("http://localhost:3000/tasks")
+      const data = await res.json()
+      this.tasks = data
+      this.isLoading = false
+    },
     addTask(task: Task) {
       this.tasks.push(task)
     },
